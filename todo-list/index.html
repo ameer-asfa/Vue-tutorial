@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Vue Todo List</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h2>All Tasks</h2>
+        <ul>
+            <li v-for="task in tasks">
+                {{ task.description }}
+                <input type="checkbox" :checked="task.completed" @click="toggleComplete(task)">
+            </li>
+        </ul>
+
+        <h2>Incomplete Tasks</h2>
+        <ul>
+            <li v-for="task in incompletedTask">{{ task.description }}</li>
+        </ul>
+
+        <h2>Completed Tasks</h2>
+        <ul>
+            <li v-for="task in completedTask">{{ task.description }}</li>
+        </ul>
+    </div>
+
+    <script>
+        let app = new Vue({
+            el: '#root',
+            data: {
+                tasks: [
+                    { description: "Go to Store", completed: true },
+                    { description: "Do Laundry", completed: false },
+                    { description: "Clean Room", completed: false },
+                    { description: "Make the Bed", completed: false },
+                    { description: "Prep Lunch", completed: false },
+                ]
+            },
+
+            methods: {
+                toggleComplete(task) {
+                    task.completed = !task.completed
+                }
+            },
+
+            computed: {
+                incompletedTask() {
+                    return this.tasks.filter(task => !task.completed)
+                },
+
+                completedTask() {
+                    return this.tasks.filter(task => task.completed)
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
